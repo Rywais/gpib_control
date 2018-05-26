@@ -19,6 +19,6 @@ class Gpib_communicator:
     def write(self, message):
         self.inst.write(message)
 
-    def query(self, message):
+    def query(self, message, delay=0.06):
         return self.inst.query(message)
 
