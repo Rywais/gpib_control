@@ -20,5 +20,7 @@ class Gpib_communicator:
         self.inst.write(message)
 
     def query(self, message, delay=0.06):
-        return self.inst.query(message)
+        return self.inst.query(message, delay=0.06)
 
+    def read(self):
+        return self.inst.read()
