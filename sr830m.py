@@ -4,7 +4,7 @@ import time
 class Sr830m:
     
     #Notes:
-    # - It seems no delay is necessary on consecutive write commands.
+    # - It seems no delay is necessary on consecutive write or query commands.
 
     QUERY_DELAY = 0.06
     
