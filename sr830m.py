@@ -3,6 +3,9 @@ import time
 
 class Sr830m:
     
+    #Notes:
+    # - It seems no delay is necessary on consecutive write commands.
+
     QUERY_DELAY = 0.06
     
     def __init__(self):
@@ -22,7 +25,7 @@ class Sr830m:
         return self.comm.query('PHAS?\n', delay = self.QUERY_DELAY)
 
     def set_phase_shift(self, ps):
-        self.comm.write('PHAS\n' + str(ps) )
+        self.comm.write('PHAS' + str(ps) + '\n' )
 
     def get_ref_src(self):
         return self.comm.query('FMOD?\n', delay=self.QUERY_DELAY)
@@ -59,7 +62,7 @@ class Sr830m:
     def set_input_config(self, config):
         self.comm.write('ISRC'+str(config)+'\n')
 
-    def get_input_shield(self):t_input_couple
+    def get_input_shield(self):
         return self.comm.query('IGND?\n',delay=self.QUERY_DELAY)
 
     def set_input_shield(self, float_gnd):
