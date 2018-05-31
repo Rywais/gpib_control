@@ -29,6 +29,9 @@ class Newport_1830_c:
 
     def get_address(self):
         return self.comm.get_address()
+
+    def read_stb(self):
+        return self.comm.read_stb()
     
     def set_wavelen(self, wavelen: int):
         wavelen_str = str(wavelen)

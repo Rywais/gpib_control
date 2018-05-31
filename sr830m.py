@@ -20,6 +20,9 @@ class Sr830m:
     def get_address(self):
         return self.comm.get_address()
 
+    def read_stb(self):
+        return self.comm.read_stb()
+
     #Reference/Phase Commands:
     def get_phase_shift(self):
         return self.comm.query('PHAS?\n', delay = self.QUERY_DELAY)
