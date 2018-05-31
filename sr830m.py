@@ -169,4 +169,177 @@ class Sr830m:
     def auto_offset(self, x_y_r):
         self.comm.write('AOFF'+str(x_y_r)+'\n')
 
-    #Auto Storage Commands
+    #Data Storage Commands
+    def get_data_sample_rate(self):
+        return self.comm.query('SRAT?\n', delay=self.QUERY_DELAY)
+
+    def set_data_sample_rate(self, sample_rate_index):
+        self.comm.write('SRAT'+str(sample_rate_index)+'\n')
+
+    def get_end_of_buf_mode(self):
+        return self.comm.query('SEND?\n',delay=self.QUERY_DELAY)
+
+    def set_end_of_buf_mode(self, shot_loop):
+        self.comm.write('SEND'+str(shot_loop)+'\n')
+
+    def software_trigger(self):
+        self.comm.write('TRIG\n')
+
+    def get_trigger_start_mode(self):
+        return self.comm.query('TSTR?\n', delay=self.QUERY_DELAY)
+
+    def set_trigger_start_mode(self, off_on):
+        self.comm.write('TSTR'+str(off_on)+'\n')
+
+    def start_data_storage(self):
+        self.comm.write('STRT\n')
+
+    def pause_data_storage(self):
+        self.comm.write('PAUS\n')
+
+    def reset_data_buffer(self):
+        self.comm.write('REST\n')
+
+    #Data Transfer Commands
+    def read_xyrtheta(self, x_y_r_theta):
+        return self.comm.query('OUTP?'+str(x_y_r_theta)+'\n', delay=self.QUERY_DELAY)
+
+    def read_display(self, ch1_ch2):
+        return self.comm.query('OUTR?'+str(ch1_ch2)+'\n',delay=self.QUERY_DELAY)
+
+    def snap(self, param_array):
+        cmnd = 'SNAP?'+str(param_array[0])+','+str(param_array[1])
+        for i in range(2,max(len(param_array),6)):
+            cmnd = cmnd+','+str(param_array[i])
+        cmnd = cmnd+'\n'
+        return self.comm.query(cmnd, delay=self.QUERY_DELAY)
+
+    def read_aux(self, aux_index):
+        return self.comm.query('OAUX?'+str(aux_index)+'\n',delay=self.QUERY_DELAY)
+
+    def get_data_points_count(self):
+        return self.comm.query('SPTS?\n',delay=self.QUERY_DELAY)
+
+    def get_buffer_values_ascii(self, channel_index, start_bin, bin_count):
+        cmnd = 'TRCA?'+str(channel_index)
+        cmnd = cmnd+','+str(start_bin)
+        cmnd = cmnd+','+str(bin_count)+'\n'
+        return self.comm.query(cmnd,delay=self.QUERY_DELAY)
+
+    def get_buffer_values_ieee(self, channel_index, start_bin, bin_count):
+        cmnd = 'TRCB?'+str(channel_index)
+        cmnd = cmnd+','+str(start_bin)
+        cmnd = cmnd+','+str(bin_count)+'\n'
+        return self.comm.query(cmnd,delay=self.QUERY_DELAY)
+
+    def get_buffer_values_float(self, channel_index, start_bin, bin_count):
+        cmnd = 'TRCL?'+str(channel_index)
+        cmnd = cmnd+','+str(start_bin)
+        cmnd = cmnd+','+str(bin_count)+'\n'
+        return self.comm.query(cmnd,delay=self.QUERY_DELAY)
+
+    def get_data_transfer_mode(self):
+        return self.comm.query('FAST?\n',delay=self.QUERY_DELAY)
+
+    def set_data_transfer_mode(self, off_dos_windows):
+        self.comm.write('FAST'+str(off_dos_windows)+'\n')
+
+    def start_fast_scan(self):
+        self.comm.write('STRD\n')
+
+    #Interface Commands
+    def reset_config(self):
+        self.comm.write('*RST\n')
+
+    def get_identity(self):
+        return self.comm.write('*IDN?\n')
+
+    def get_local_function(self):
+        return self.comm.query('LOCL?\n')
+
+    def set_local_function(self, local_remote):
+        self.comm.write('LOCL'+str(local_remote)+'\n')
+
+    def get_gpib_override(self):
+        return self.comm.query('OVRM?\n',delay=self.QUERY_DELAY)
+
+    def set_gpib_override(self, no_yes):
+        self.comm.write('OVRM'+str(no_yes)+'\n')
+
+    #Status Reporting Commands
+    def clear_status_registers(self):
+        self.comm.write('*CLS\n')
+
+    def get_standard_event_enable_decimal(self):
+        return self.comm.query('ESE?\n',delay=self.QUERY_DELAY)
+
+    def get_standard_event_enable_binary(self, index):
+        return self.comm.query('ESE?'+str(index)+'\n',delay=self.QUERY_DELAY)
+
+    def set_standard_event_enable_decimal(self, val):
+        self.comm.write('ESE'+str(val)+'\n')
+
+    def set_standard_event_enable_binary(self, index, low_high):
+        cmnd = 'ESE'+str(index)+','+str(low_high)+'\n'
+        self.comm.write(cmnd)
+
+    def get_standard_event_status_decimal(self):
+        return self.comm.query('ESR?', delay=self.QUERY_DELAY)
+
+    def get_standard_event_status_binary(self, index):
+        cmnd = 'ESR'+str(index)+'\n'
+        return self.comm.query(cmnd,delay=self.QUERY_DELAY)
+
+    def set_standard_event_status_decimal(self, val):
+        self.comm.write('ESR'+str(val)+'\n')
+
+    def get_serial_poll_decimal(self):
+        return self.comm.query('*STB?\n',delay=self.QUERY_DELAY)
+
+    def get_serial_poll_binary(self, index):
+        return self.comm.query('*STB?'+str(index)+'\n', delay=self.QUERY_DELAY)
+
+    def get_power_on_status_clear(self):
+        return self.comm.query('*PSC?\n',delay=self.comm.QUERY_DELAY)
+
+    def set_power_on_status_clear(self, bit):
+        self.comm.write('*PSC'+str(bit)+'\n')
+
+    def get_error_status_enable_decimal(self):
+        return self.comm.query('ERRE?\n',delay=self.QUERY_DELAY)
+
+    def get_error_status_enable_binary(self, index):
+        return self.comm.query('ERRE?'+str(index)+'\n',delay=self.QUERY_DELAY)
+
+    def set_error_status_enable_decimal(self, val):
+        self.comm.write('ERRE'+str(val)+'\n')
+
+    def set_error_status_enable_binary(self,bit_index, low_high):
+        self.comm.write('ERRE'+str(bit_index)+','+str(low_high)+'\n')
+
+    def get_error_status_decimal(self):
+        return self.comm.query('ERRS?\n',delay=self.QUERY_DELAY)
+
+    def get_error_status_binary(self, bit_index):
+        return self.comm.query('ERRS?'+str(bit_index)+'\n',delay=self.QUERY_DELAY)
+
+    def get_lockin_status_enable_decimal(self):
+        return self.comm.query('LIAE?\n',delay=self.QUERY_DELAY)
+
+    def get_lockin_status_enable_binary(self, bit_index):
+        return self.comm.query('LIAE?'+str(bit_index)+'\n',delay=self.QUERY_DELAY)
+
+    def set_lockin_status_enable_decimal(self, val):
+        self.comm.write('LIAE'+str(val)+'\n')
+
+    def set_lockin_status_enable_binary(self, bit_index, low_high):
+        self.comm.write('LIAE'+str(bit_index)+','+str(low_high)+'\n')
+
+    def get_lockin_status_decimal(self):
+        return self.comm.query('LIAS?\n',delay=self.QUERY_DELAY)
+
+    def get_lockin_status_binary(self,bit_index):
+        cmnd = 'LIAS?'+str(bit_index)+'\n'
+        return self.comm.query(cmnd,delay=self.QUERY_DELAY)
+
+
