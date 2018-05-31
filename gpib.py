@@ -24,3 +24,6 @@ class Gpib_communicator:
 
     def read(self):
         return self.inst.read()
+
+    def read_stb(self):
+        return self.inst.read_stb()
