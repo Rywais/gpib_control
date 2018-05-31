@@ -7,6 +7,36 @@ class Sr830m:
     # - It seems no delay is necessary on consecutive write or query commands.
 
     QUERY_DELAY = 0.06
+
+    SERIAL_BIT_NO_SCAN = 1 << 0
+    SERIAL_BIT_NO_COMMAND = 1 << 1
+    SERIAL_BIT_ERROR_BIT = 1 << 2
+    SERIAL_BIT_LIA_BIT = 1 << 3
+    SERIAL_BIT_MESSAGE_AVAILABLE = 1 << 4
+    SERIAL_BIT_STANDARD_BIT = 1 << 5
+    SERIAL_BIT_SERVICE_REQUEST = 1 << 6
+
+    STANDARD_BIT_INPUT_OVERFLOW = 1 << 0
+    STANDARD_BIT_OUTPUT_OVERFLOW = 1 << 2
+    STANDARD_BIT_CANNOT_EXECUTE = 1 << 4
+    STANDARD_BIT_ILLEGAL_COMMAND = 1 << 5
+    STANDARD_BIT_KEY_PRESS = 1 << 6
+    STANDARD_BIT_POWER_ON = 1 << 7
+
+    LIA_BIT_INPUT_AMP_OVERLOAD = 1 << 0
+    LIA_BIT_TIME_CONST_OVERLOAD = 1 << 1
+    LIA_BIT_OUTPT_OVERLOAD = 1 << 2
+    LIA_BIT_REFERNCE_INLOCK = 1 << 3
+    LIA_BIT_RANGE_CHANGE = 1 << 4
+    LIA_BIT__TIME_CONST_CHANGE = 1 << 5
+    LIA_BIT_DATA_STORAGE_TRIGGER = 1 << 6
+
+    ERROR_BIT_BATTERY_FAIL = 1 << 1
+    ERROR_BIT_RAM_FAIL = 1 << 2
+    ERROR_BIT_ROM_FAIL = 1 << 4
+    ERROR_BIT_GPIB_FAST_FAIL = 1 << 5
+    ERROR_BIT_DSP_FAIL = 1 << 6
+    ERROR_BIT_MATH_FAIL = 1 << 7
     
     def __init__(self):
         self.address = ''
