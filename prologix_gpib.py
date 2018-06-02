@@ -12,6 +12,14 @@ class Gpib_communicator:
     def get_serial(self):
         return self.ser.port
 
+    # Note that this "adress" is ony the single GPIB address number
+    # i.e. for "GPIB0::17::INSTR" you must only input 17
+    def set_address(self, address):
+        self.ser.write(('++addr'+str(address)+'\n').encode('utf-8'))
+
+    def get_address(self):
+        return self.query('++addr\n',delay=0.005,timeout=0.03)
+
     def write(self, message):
         self.ser.write(message.encode('utf-8'))
 
